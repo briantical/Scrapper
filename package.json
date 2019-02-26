@@ -1,0 +1,19 @@
+{
+  "name": "scrapp",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd scrapper && yarn start",
+    "server": "cd Backscrapper && nodemon index.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  },
+  "license": "MIT",
+  "author" : "Lutaaya Brian Ivan"
+}

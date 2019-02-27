@@ -16,7 +16,9 @@
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.4",
     "fs": "^0.0.1-security",
+    "mongo-watch": "^0.2.8",
     "mongoose": "^5.4.13",
+    "mubsub": "^1.4.0",
     "puppeteer": "^1.12.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"

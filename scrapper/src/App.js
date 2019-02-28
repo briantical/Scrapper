@@ -17,9 +17,14 @@ class App extends Component {
           {
             this.state.contentVisible ?  
             <Display/> :
-            <button className="scrapBtn" onClick={()=>this.setState({contentVisible: true})}>
-              SCRAP
-            </button>
+            <div>
+              <button className="scrapBtn" onClick={()=>this.setState({contentVisible: true})}>
+                SCRAP
+              </button>
+              <button className="scrapBtn" onClick={()=>this.setState({contentVisible: true})}>
+                CLOUD
+              </button>
+            </div>            
           }                            
         </header>
       </div>

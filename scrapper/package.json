@@ -8,12 +8,13 @@
     "body-parser": "^1.18.3",
     "fs": "^0.0.1-security",
     "mongoose": "^5.4.13",
-    "react": "^16.8.2",
+    "react": "^16.8.2",    
     "react-dom": "^16.8.2",
-    "react-scripts": "2.1.5"
+    "react-scripts": "2.1.5",
+    "react-tag-cloud": "^1.2.0"
   },
   "license": "MIT",
-  "author" : "Lutaaya Brian Ivan",
+  "author": "Lutaaya Brian Ivan",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

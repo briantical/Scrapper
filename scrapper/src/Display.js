@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const categories = {    
-  1: 'alpha',
-  2: 'user_rating',
-  3: 'num_votes',
-  4: 'boxoffice_gross_us',
-  5: 'year'
-}
-
-
 class Display extends Component {
   constructor(props){
     super(props)
     this.state={
-      data : []
+      data : [],
+      category: null
     }
   }
 
@@ -22,19 +14,12 @@ class Display extends Component {
     this.scrap();       
   }
   
-  
-//Generate Random numbers between any two values them inclusive
-getRandomInt = (min, max) =>{
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
   scrap = () =>{
-    fetch('http://localhost:5000/movies')
+    fetch('http://localhost:5000/movies') 
       .then(res => res.json())
       .then((data)=>{                
-        this.setState({data: data});
+        this.setState({data: data[0]});
+        this.setState({category: data[1]});
         console.log('Data successfully fetched...')      
       })
       .catch(error =>{
@@ -46,7 +31,7 @@ getRandomInt = (min, max) =>{
     return (
       <div className="App">
         <header className="displayContainer">
-            <div className="filterCriteria">{`Criteria :${categories[getRandomInt(1,5)]}`}</div>
+            <div className="filterCriteria">{`Criteria :${this.state.category}`}</div>
             <table cellSpacing={20}>
                 <thead>
                     <tr>

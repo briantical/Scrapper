@@ -42,11 +42,20 @@ const categories = {
     5: 'year'
 }
 
+let category = categories[getRandomInt(1,5)]
 //The final link generated.
-let dynamicUrl = `https://www.imdb.com/search/title?groups=top_250&view=simple&sort=${categories[getRandomInt(1,5)]},asc&start=${getRandomInt(1,250)}&ref_=adv_nxt`
+let dynamicUrl = `https://www.imdb.com/search/title?groups=top_250&view=simple&sort=${category},asc&start=${getRandomInt(1,250)}&ref_=adv_nxt`
 console.log(`The URL TO SCRAP: ${dynamicUrl}`)
  
 //Use puppeteer to get webpages with dynamically loaded data.
+//Before adding any new movies remove all preexisting contents from the MongoDB database
+Movie.removeAllMovies((err) => {
+    if (err) {
+        console.log(`An error has occurred while removing the Data: \n ERROR: ${err}`);
+        throw err;
+    }            
+    console.log('DB cleaned sucessfully')
+})
 puppeteer
     .launch()
     .then((browser) => {
@@ -78,9 +87,7 @@ puppeteer
         //Movie Rating 
         $('.col-imdb-rating', html).children('strong').each(function(i, elem){        
             lists[i].rating = parseFloat($(this).text().trim());       
-        })
-        //Before adding any new movies remove all preexisting contents from the MongoDB database
-        Movie.removeAll()          
+        })                  
         lists.map((list , index) => {              
             Movie.addMovie(list, (err, list) =>{
                 if(err){
@@ -98,15 +105,15 @@ puppeteer
 
 server.get('/', (req,res) =>{
     res.send('Welcome To SCRAPPER');
-})
+})                      
 
 server.get("/movies", (req, res) => {
 	Movie.getMovies((err, movies) => {
 		if (err) {
-			console.log(err);
+            console.log(err);            
 			throw err;
         }        
-        res.json(movies);
+        res.json([movies,category]);    
         console.log('Api request sucessfully')
 	});
 });

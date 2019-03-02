@@ -23,14 +23,15 @@ var movieSchema = mongoose.Schema({
 
 var movies = (module.exports = mongoose.model("Movie", movieSchema));
 
+
 //add a movie
 module.exports.addMovie = function(movie, callback) {
 	movies.create(movie, callback);
 };
 //remove all movies
-module.exports.removeAll = function(callback,limit){
+module.exports.removeAllMovies = function(callback,limit){
 	console.log('Removing all content ...')
-	movies.remove({})
+	movies.deleteMany({}, callback)
 	console.log('Successfully removed all historical data')
 }
 //get all the movies

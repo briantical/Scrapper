@@ -12,6 +12,10 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.btnCollections{
+  width: "100vw";
+  display: flex;
+}
 .scrapBtn{
   width: 80px;
   height: 40px;

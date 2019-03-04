@@ -12,16 +12,22 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.screen{ 
+  align-items: center;
+  justify-content: center;
+}
 .btnCollections{
   width: "100vw";
   display: flex;
 }
 .scrapBtn{
+  transition: 3.4s;
   width: 80px;
   height: 40px;
   border-radius: 20px;
   border-color: aliceblue;
   border-width: 2px;
+  margin-right: 20px;
 }
 .displayContainer {
   background-color: #282c34;

@@ -3,10 +3,23 @@ const $ = require('cheerio');
 const puppeteer = require('puppeteer');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+//const Twitter = require('twitter');
+const Twitter = require('twitter-js-client').Twitter;
 const server = express();
+require('dotenv').load();
 
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 5000;
+
+let config = {
+    "consumerKey": process.env.TWITTER_CONSUMER_KEY,
+    "consumerSecret": process.env.TWITTER_CONSUMER_SECRET,
+    "accessToken": process.env.TWITTER_ACCESS_TOKEN_KEY,
+    "accessTokenSecret": process.env.TWITTER_ACCESS_TOKEN_SECRET,
+    
+  };
+
+let client = new Twitter(config);  
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended: true}));
@@ -25,6 +38,24 @@ mongoose.connect("mongodb://localhost:27017/scrapper",
     {useNewUrlParser: true}
 );
 let db = mongoose.connection;
+
+//Twitter Callback function on failure
+let error = function (err, response, body) {
+    console.log('ERROR [%s]', JSON.stringify(err));
+};
+
+//Twitter Callback function on success
+let success = function (data) {    
+    //console.log(data)
+    var str = data;    
+    let trends = str.match(/#\w+/g);
+    let trendRate = [...new Set(trends.map(trend => trend))].map(trendCount => ({ trend: trendCount, count: trends.filter(trend => trend === trendCount).length }));
+
+    console.log(trendRate);
+
+};
+
+client.getHomeTimeline({ count: '10000', tweet_mode: 'extended'}, error, success);
 
 //Generate Random numbers between any two values them inclusive
 let getRandomInt = (min, max) =>{

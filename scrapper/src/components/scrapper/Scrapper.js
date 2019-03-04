@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import './../../App.css';
 
-class Display extends Component {
+class Scrapper extends Component {
   constructor(props){
     super(props)
     this.state={
@@ -63,4 +63,4 @@ class Display extends Component {
   }
 }
 
-export default Display;
+export default Scrapper;

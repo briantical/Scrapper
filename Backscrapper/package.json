@@ -22,9 +22,7 @@
     "mubsub": "^1.4.0",
     "puppeteer": "^1.12.2",
     "request": "^2.88.0",
-    "request-promise": "^4.2.4",
-    "twitter": "^1.7.1",
-    "twitter-js-client": "^0.0.5",
-    "twitter-node-client": "^0.0.6"
+    "request-promise": "^4.2.4",    
+    "twitter-js-client": "^0.0.5"    
   }
 }

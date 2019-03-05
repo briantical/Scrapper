@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
-import TagCloud from 'react-tag-cloud';
+//import TagCloud from 'react-tag-cloud';
 //import randomColor from 'randomcolor';
-import CloudItem from './CloudItem';
+//import CloudItem from './CloudItem';
+import WordCloud from 'react-d3-cloud';
 import './Cloud.css';
 
-const styles = {
-  large: {
-    fontSize: 60,
-    fontWeight: 'bold'
-  },
-  small: {
-    opacity: 0.7,
-    fontSize: 16
-  }
-};
+let  thedata = [
+  { text: 'Briantical', value: 1000 },
+  { text: 'Nodejs', value: 200 },
+  { text: 'React ', value: 800 },
+  { text: 'Express', value: 1000000 },
+  { text: 'Brian Ivan', value: 1089 },
+];
+
+fetch('http://localhost:5000/tweets') 
+      .then(res => res.json())
+      .then((data)=>{  
+        console.log(data)  
+        thedata = data                                  
+        console.log('Data successfully fetched...')      
+      })
+      .catch(error =>{        
+        console.log('Error fetching data: ' + error);
+      })
+
+const fontSizeMapper = word => word.value / 20;
+const rotate = word => (word.value % 90) - 45;
 
 class Cloud extends Component {
   constructor(props){
@@ -23,82 +35,28 @@ class Cloud extends Component {
     }
   }
 
-  componentDidMount() {
-    setInterval(() => {
-      this.forceUpdate();
-    }, 3000);
+  componentDidMount() {    
+   // setInterval(() => {
+      ////this.forceUpdate();      
+    //}, 3000);
   }
-
   
-  render() {       
+  render() {   
+    const newData = thedata.map(item => ({
+      text: item.text,
+      value: Math.random() * 1000
+    }));
     return (
       <div className='app-outer'>
         <div className='app-inner'>
           <h1>#Trends</h1>
-          <TagCloud 
-            className='tag-cloud'
-            style={{
-              fontFamily: 'sans-serif',
-              //fontSize: () => Math.round(Math.random() * 50) + 16,
-              fontSize: 30,
-              //color: () => randomColor({
-                //hue: 'blue'
-              //}),
-              padding: 5,
-            }}>
-            <div
-              style={{
-                fontFamily: 'serif',
-                fontSize: 40,
-                fontStyle: 'italic',
-                fontWeight: 'bold',
-                //color: randomColor()
-              }}>#Bosco</div>
-            <CloudItem text="Custom item, Hover me!" />
-            <CloudItem text="Custom item 2, Hover me!" />
-            <div style={styles.large}>#CurvyWomen</div>
-            <div style={styles.large}>#ElClassico</div>
-            <div style={styles.large}>#MeToo</div>
-            <div style={styles.large}>Rick & Morty</div>
-            <div style={{fontFamily: 'courier'}}>#ABSA</div>
-            <div style={{fontSize: 30}}>World trigger</div>
-            <div style={{fontStyle: 'italic'}}>Avengers</div>
-            <div style={{fontWeight: 200}}>Family Guy</div>
-            <div style={{color: 'green'}}>American Dad</div>
-            <div className="tag-item-wrapper">
-              <div>
-                Hover Me Please!
-              </div>
-              <div className="tag-item-tooltip">
-                HOVERED!
-              </div>
-            </div>
-            <div>Gobots</div>
-            <div>Thundercats</div>
-            <div>M.A.S.K.</div>
-            <div>GI Joe</div>
-            <div>Inspector Gadget</div>
-            <div>Bugs Bunny</div>
-            <div>Tom & Jerry</div>
-            <div>Cowboy Bebop</div>
-            <div>Evangelion</div>
-            <div>Bleach</div>
-            <div>GITS</div>
-            <div>Pokemon</div>
-            <div>She Ra</div>
-            <div>Fullmetal Alchemist</div>
-            <div>Gundam</div>
-            <div>Uni Taisen</div>
-            <div>Pinky and the Brain</div>
-            <div>Bobs Burgers</div>
-            <div style={styles.small}>Dino Riders</div>
-            <div style={styles.small}>Silverhawks</div>
-            <div style={styles.small}>Bravestar</div>
-            <div style={styles.small}>Starcom</div>
-            <div style={styles.small}>Cops</div>
-            <div style={styles.small}>Alfred J. Kwak</div>
-            <div style={styles.small}>Dr Snuggles</div>
-          </TagCloud>
+          <WordCloud
+            width={1000}
+            height={750}
+            data={newData}
+            fontSizeMapper={fontSizeMapper}
+            rotate={rotate}
+          />
         </div>
       </div>
     );

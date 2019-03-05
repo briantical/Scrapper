@@ -33,6 +33,7 @@ server.use(function(req, res, next) {
   
 
 Movie = require('./models/movies');
+Trend = require('./models/trends');
 mongoose.set('useFindAnd Modify', false);
 mongoose.connect("mongodb://localhost:27017/scrapper",
     {useNewUrlParser: true}
@@ -45,16 +46,32 @@ let error = function (err, response, body) {
 };
 
 //Twitter Callback function on success
-let success = function (data) {    
-    //console.log(data)
+let success = function (data) { 
+
+    Trend.removeAllTrends((err) => {
+        if (err) {
+            console.log(`An error has occurred while removing the twitter data: \n ERROR: ${err}`);
+            throw err;
+        }else{
+            console.log('Removed all twitter data')
+        }                  
+    })
+
     var str = data;    
     let trends = str.match(/#\w+/g);
-    let trendRate = [...new Set(trends.map(trend => trend))].map(trendCount => ({ trend: trendCount, count: trends.filter(trend => trend === trendCount).length }));
+    let trendsRate = [...new Set(trends.map(text => text))].map(value => ({ text: value, value: (trends.filter(text => text === value).length)*100}));
 
-    console.log(trendRate);
-
+    trendsRate.map((trendRate , index) => {              
+        Trend.addTrend(trendRate, (error, trendRate) =>{
+            if(error){
+                console.log('Error: ' + error);
+                throw err;
+            }                                
+        })        
+    })
+    console.log(`Twiitter data entered successfully`)
+     
 };
-
 client.getHomeTimeline({ count: '10000', tweet_mode: 'extended'}, error, success);
 
 //Generate Random numbers between any two values them inclusive
@@ -149,6 +166,16 @@ server.get("/movies", (req, res) => {
 	});
 });
 
+server.get("/tweets", (req, res) => {
+	Trend.getTrends((err, trends) => {
+		if (err) {
+            console.log(err);            
+			throw err;
+        }        
+        res.json(trends);    
+        console.log('Twitter request from DB sucessfully')
+	});
+});
   
 //listen for request on port 3000, and as a callback function have the port listened on logged
 server.listen(port, hostname, () => {

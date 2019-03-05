@@ -8,11 +8,13 @@
     "body-parser": "^1.18.3",
     "fs": "^0.0.1-security",
     "mongoose": "^5.4.13",
-    "react": "^16.8.2",    
+    "randomcolor": "^0.5.3",
+    "react": "^16.8.2",
+    "react-d3-cloud": "^0.7.0",
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5",
     "react-tag-cloud": "^1.2.0",
-    "randomcolor": "^0.5.3"
+    "react-wordcloud": "^0.0.1"
   },
   "license": "MIT",
   "author": "Lutaaya Brian Ivan",

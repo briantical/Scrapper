@@ -35,10 +35,7 @@ class Cloud extends Component {
     }
   }
 
-  componentDidMount() {    
-   // setInterval(() => {
-      ////this.forceUpdate();      
-    //}, 3000);
+  componentDidMount() {       
   }
   
   render() {   
@@ -51,8 +48,8 @@ class Cloud extends Component {
         <div className='app-inner'>
           <h1>#Trends</h1>
           <WordCloud
-            width={1000}
-            height={750}
+            width={window.innerWidth}
+            height={window.innerHeight}
             data={newData}
             fontSizeMapper={fontSizeMapper}
             rotate={rotate}
